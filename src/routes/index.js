@@ -8,18 +8,19 @@ import EpisodeRouter from './episode.js';
 import StreamRouter from './stream.js';
 import GenreSeriesRouter from './genreSeries.js';
 
-const router = express.Router();
+const protectedRouter = express.Router();
+const unprotectedRouter = express.Router();
 
-router.use('/users', UserRouter);
-router.use('/genres', GenreRouter);
-router.use('/series', SeriesRouter);
-router.use('/files', FileRouter);
-router.use('/seasons', SeasonRouter);
-router.use('/episodes', EpisodeRouter);
-router.use('/streams', StreamRouter);
-router.use('/genre-series', GenreSeriesRouter);
+unprotectedRouter.use('/users', UserRouter);
+protectedRouter.use('/genres', GenreRouter);
+protectedRouter.use('/series', SeriesRouter);
+protectedRouter.use('/files', FileRouter);
+protectedRouter.use('/seasons', SeasonRouter);
+protectedRouter.use('/episodes', EpisodeRouter);
+protectedRouter.use('/streams', StreamRouter);
+protectedRouter.use('/genre-series', GenreSeriesRouter);
 
 
 
-export default router;
+export  { protectedRouter, unprotectedRouter};
 

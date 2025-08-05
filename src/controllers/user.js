@@ -11,7 +11,7 @@ const UserController = {
       const users = await UserService.get(req.query);
       res.json(users);
     } catch (err) {
-      res.json({ message: err.message });
+      res.status(400).json({ error: err.message });
     }
   },
   getById: async (req, res) => {
@@ -19,7 +19,7 @@ const UserController = {
       const user = await UserService.getById(req.params.id);
       res.json(user);
     } catch (err) {
-      res.json({ message: err.message });
+      res.status(400).json({ error: err.message });
     }
   },
   getStreamOfUsersById: async (req, res) => {
@@ -27,7 +27,7 @@ const UserController = {
       const userStreams = await UserService.getStreamOfUsersById(req.params.id);
       res.json(userStreams);
     } catch (err) {
-      res.json({ message: err.message });
+      res.status(400).json({ error: err.message });
     }
   },
   getEpisodesByUserId: async (req, res) => {
@@ -35,7 +35,7 @@ const UserController = {
       const episodes = await UserService.getEpisodesByUserId(req.params.id);
       res.json(episodes);
     } catch (err) {
-      res.json({ message: err.message });
+      res.status(400).json({ error: err.message });
     }
   },
   create: async (req, res) => {
@@ -58,7 +58,7 @@ const UserController = {
       });
       res.status(200).json(result);
     } catch (err) {
-      res.json({ message: err.message });
+      res.status(400).json({ error: err.message });
     }
   },
   delete: async (req, res) => {
@@ -66,7 +66,7 @@ const UserController = {
       const result = await UserService.delete(req.params.id);
       res.status(200).json(result);
     } catch (err) {
-      res.json({ message: err.message });
+      res.status(400).json({ error: err.message });
     }
   },
   login: async (req, res) => {

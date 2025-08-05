@@ -1,5 +1,6 @@
 import express from "express";
-import  router  from "../routes/index.js";
+import { protectedRouter, unprotectedRouter } from "../routes/index.js";
+import authenticate from "../middlewares/authenticate.js";
 
 export default async function expressLoader({ app }) {
 
@@ -7,5 +8,7 @@ export default async function expressLoader({ app }) {
 	app.use(express.json());
 	app.use(express.urlencoded());
 
-	app.use("/", router);
+	app.use("/", authenticate,protectedRouter);
+	app.use("/", unprotectedRouter);
+
 }
