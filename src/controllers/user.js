@@ -1,4 +1,9 @@
 import UserService from "../services/user.js";
+import {
+  registerUserSchema,
+  loginUserSchema,
+} from "../middlewares/userValidation.js";
+import mongoose from "mongoose";
 
 const UserController = {
   get: async (req, res) => {
@@ -35,6 +40,10 @@ const UserController = {
   },
   create: async (req, res) => {
     try {
+      const { error } = registerUserSchema.validate(req.body);
+      if (error)
+        return res.status(400).json({ error: error.details[0].message });
+
       const result = await UserService.create(req.body);
       res.status(201).json({ message: "User registered", result });
     } catch (err) {
@@ -62,12 +71,16 @@ const UserController = {
   },
   login: async (req, res) => {
     try {
+      const { error } = loginUserSchema.validate(req.body);
+      if (error)
+        return res.status(400).json({ error: error.details[0].message });
+
       const { token, userdata } = await UserService.login(req.body);
       res.status(200).json({
         message: "Login successful",
         token,
         data: {
-         userdata
+          userdata,
         },
       });
     } catch (err) {
