@@ -1,3 +1,4 @@
+import file from "../models/file.js";
 import FileService from "../services/file.js";
 
 const FileController = {
@@ -50,6 +51,39 @@ const FileController = {
       res.status(500).json({ error: error.message });
     }
   },
-};
+  uploadFile :async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        status: 400,
+        response: "Bad Request",
+        message: "No file uploaded",
+      });
+    }
+
+    const newFile = new file({
+      originalName: req.file.originalname,
+      currentName: req.file.filename,
+      type: req.file.mimetype,
+      path: req.file.path,
+      size: `${(req.file.size / 1024).toFixed(2)} KB`,
+    });
+
+    const savedFile = await newFile.save();
+
+    res.status(201).json({
+      status: 201,
+      response: "Created",
+      message: "File uploaded successfully",
+      data: savedFile,
+    });
+  } catch (error) {
+    console.error("Upload error:", error);
+    res.status(500).json({
+      status: 500,
+      response: "Internal Server Error",
+      message: "Failed to upload file",
+    });
+  }}};
 
 export default FileController;
