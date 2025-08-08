@@ -14,10 +14,9 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  cb(null, true); // accept all files
+  cb(null, true); 
 };
 
-// Create upload instance
 const upload = multer({ storage, fileFilter });
 
 export default upload;
